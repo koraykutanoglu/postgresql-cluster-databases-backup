@@ -52,6 +52,17 @@ keepalivedip=xx
 backup_time=5
 ```
 
+8) ssh-key must be set for machines to access each other. This is how the backup is sent. ssh-key should be copied from all postgresql servers to SFTP server.
+
+```
+ssh-keygen
+```
+
+```
+ssh-copy-id -f user@hostname
+```
+
+
 ## Finally;
 
 After all these settings, install this script file on all your postgresql cluster machines and create a cron for this file on each machine.
