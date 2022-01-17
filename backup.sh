@@ -9,6 +9,7 @@ local_backup_directory=/my/backupdir
 sftp_backup_directory=/root/backup
 keepalivedip=xx
 backup_time=5
+file_password=password
 
 echo "-------------------------------------------------------------------------"
 echo "Checking Keepalived IP"
@@ -37,7 +38,7 @@ echo "pg_dumpall is start"
 sleep 2
 sudo -u postgres pg_dumpall --globals-only | gzip > $backupdir/postgres_globals.sql.gz
 for db in `sudo -u postgres psql -t -c "select datname from pg_database where not datistemplate" | grep '\S' | awk '{$1=$1};1'`; do
-   sudo -u postgres pg_dump $db | gzip > $backupdir/$db.sql.gz
+   sudo -u postgres pg_dump $db | gzip | gpg -c --batch --passphrase $file_password > $backupdir/$db.sql.gz.gpg
 done
 end=$(date +%s) 
 echo "-------------------------------------------------------------------------"
