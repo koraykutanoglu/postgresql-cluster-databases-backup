@@ -52,7 +52,19 @@ keepalivedip=xx
 backup_time=5
 ```
 
-8) ssh-key must be set for machines to access each other. This is how the backup is sent. ssh-key should be copied from all postgresql servers to SFTP server.
+8) Backups are sent encrypted. That's why you need a password to be able to open backups again. Passwords are encrypted with GPG.
+
+```
+file_password=password
+```
+
+To be able to turn the backups back on, use the command below
+
+```
+gpg --output test.sql.gz --decrypt test.sql.gz.gpg
+```
+
+9) ssh-key must be set for machines to access each other. This is how the backup is sent. ssh-key should be copied from all postgresql servers to SFTP server.
 
 ```
 ssh-keygen
